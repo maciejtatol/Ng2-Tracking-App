@@ -1,10 +1,18 @@
 # Ng2 Tracking App
 
-## !important
+## ! important !
 
-Creadentials data was masked - add own credentials to `/src/environments/firebase.config.ts`
+Add own credentials to `/src/environments/firebase.config.ts` using following sample:
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0-rc.2.
+```
+export const firebaseConfig = {
+  apiKey: <apiKey>,
+  authDomain: <authDomain>,
+  databaseURL: <databaseURL>,
+  storageBucket: <storageBucket>,
+  messagingSenderId: <messagingSenderId>
+};
+```
 
 ## Development server
 

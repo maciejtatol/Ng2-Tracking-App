@@ -1,0 +1,25 @@
+<sebm-google-map
+  [latitude]="lat"
+  [longitude]="lng"
+  [zoom]="zoom"
+  [disableDefaultUI]="true"
+  [zoomControl]="false">
+
+  <sebm-google-map-polyline
+    *ngFor="let track of dbTracks | async"
+    [strokeColor]="track.trackColor"
+    geodesic="true"
+    strokeWeight="8">
+    <sebm-google-map-polyline-point
+      *ngFor="let p of track.points | pointFilter"
+      [latitude]="p.lat"
+      [longitude]="p.lng"
+      >
+
+    </sebm-google-map-polyline-point>
+  </sebm-google-map-polyline>
+
+</sebm-google-map>
+
+<button class="btn btn-default" (click)="startTracking()" >Start tracking </button>
+<button class="btn btn-primary" (click)="stopTracking()" >Stop tracking </button>

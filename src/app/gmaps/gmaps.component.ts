@@ -18,7 +18,7 @@ export class GmapsComponent {
   trackingStartTime: Date;
   trackedPoints: point[];
   actualTrack: track;
-  trackKey: number;
+  trackKey: string;
   Math: any;
   navigator: any;
 
@@ -96,12 +96,12 @@ export class GmapsComponent {
   }
 }
 
-interface Ipoint {
+interface point {
   lat: number;
   lng: number;
 }
 
-interface Itrack {
+interface track {
   created_at: Date;
   trackColor: string;
   points: point[];

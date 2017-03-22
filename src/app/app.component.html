@@ -1,3 +1,9 @@
 <h1>
   {{title}}
 </h1>
+<ul>
+  <li class="text" *ngFor="let item of items | async">
+    {{item?.full_name}}
+  </li>
+</ul>
+<app-gmaps></app-gmaps>

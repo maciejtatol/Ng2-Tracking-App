@@ -1,0 +1,15 @@
+<div
+  class="side-panel"
+  [class.side-panel--hidden]="isPanelClosed"
+  (window:resize)="onResize($event)">
+  <button class="side-panel__button" (click)="togglePanel()">
+    <i class="fa fa-id-card-o"></i>
+  </button>
+  <ul class="side-panel__wrapper">
+    <li class="side-panel__item">
+      <p>
+        side-panel works!
+      </p>
+    </li>
+  </ul>
+</div>

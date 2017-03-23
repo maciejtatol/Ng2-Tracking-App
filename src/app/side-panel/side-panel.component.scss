@@ -1,0 +1,53 @@
+.side-panel {
+  position: relative;
+  height: 100%;
+  width: 300px;
+
+  @media (min-width: 768px) {
+    width: 400px;
+  }
+
+  &--hidden {
+    width: 0;
+
+    @media (min-width: 768px) {
+      width: 400px;
+    }
+  }
+
+  &__button {
+    display: block;
+    position: absolute;
+    top: 10px;
+    left: -40px;
+    width: 40px;
+    height: 40px;
+    background-color: beige;
+    cursor: pointer;
+    z-index: 1;
+    font-size: 20px;
+    line-height: 30px;
+    border: 1px solid #228F8C;
+
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
+
+  &__wrapper {
+    padding: 20px;
+    border-left: 1px solid #228F8C;
+    overflow-y: auto;
+    height: 100%;
+    list-style:  none;
+  }
+
+  &__item {
+    border: 1px solid gray;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    margin-bottom: 20px;
+    background-color: rgba(210,220,240,0.7);
+    padding: 10px;
+  }
+}

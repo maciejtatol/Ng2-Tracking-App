@@ -9,20 +9,23 @@ import {
   AuthProviders
 } from 'angularfire2';
 
-import { MapWrapperService } from './map-wrapper.service';
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { GmapsComponent } from './gmaps/gmaps.component';
 import { firebaseConfig } from './../environments/firebase.config';
 import { AgmCoreModule } from 'angular2-google-maps/core';
 import { PointFilterPipe } from './point-filter.pipe';
+import { HeaderComponent } from './header/header.component';
+import { SidePanelComponent } from './side-panel/side-panel.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomePageComponent,
     GmapsComponent,
-    PointFilterPipe
+    HomePageComponent,
+    HeaderComponent,
+    PointFilterPipe,
+    SidePanelComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,7 +39,7 @@ import { PointFilterPipe } from './point-filter.pipe';
       apiKey: 'AIzaSyAdqECNlRtdg5MaB-GJQ486W-jGZhhWCNg'
     })
   ],
-  providers: [MapWrapperService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

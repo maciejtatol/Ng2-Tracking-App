@@ -4,16 +4,18 @@ import {
   SebmGoogleMapPolyline,
   SebmGoogleMapPolylinePoint
 } from 'angular2-google-maps/core';
-import { AngularFire, FirebaseListObservable  } from 'angularfire2';
+import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { MapWrapperService } from './../map-wrapper.service';
 
 @Component({
   selector: 'app-gmaps',
   templateUrl: './gmaps.component.html',
-  styleUrls: ['./gmaps.component.css']
+  styleUrls: ['./gmaps.component.scss']
 })
+
 export class GmapsComponent {
   dbTracks: FirebaseListObservable<any[]>;
+  dbUser: FirebaseObjectObservable<any[]>;
   trackingId: number;
   trackingStartTime: Date;
   trackedPoints: point[];
@@ -21,27 +23,22 @@ export class GmapsComponent {
   trackKey: string;
   Math: any;
   navigator: any;
-
-  zoom = 8;
-  lat = 51.673858;
-  lng = 7.815982;
+  userId: string = 'user1';
+  defaultZoom = 17;
 
   constructor(af: AngularFire) {
     this.dbTracks = af.database.list('/tracks');
+    this.dbUser = af.database.object(`/users/${this.userId}`);
     this.Math = Math;
     this.navigator = navigator;
+
+    this.dbUser.update({
+      isTracking: false,
+    });
   }
 
   startTracking() {
-    // navigator.geolocation.getCurrentPosition(function(location) {
-    //   this.lat = location.coords.latitude;
-    //   this.lng = location.coords.longitude;
-    //
-    //   console.log(location.coords.latitude);
-    //   console.log(location.coords.longitude);
-    //   console.log(location.coords.accuracy);
-    // })
-   if (!navigator.geolocation) {
+    if (!navigator.geolocation) {
       return alert('Geolocation is not supported by your browser');
     }
 
@@ -54,45 +51,50 @@ export class GmapsComponent {
       users: []
     };
 
-    this.dbTracks.push(this.actualTrack).then((snap) => {
-      this.trackKey = snap.key;
-    });
-
     const onSuccess = (position) => {
-      console.log(position);
+      const actualLat = position.coords.latitude;
+      const actualLng = position.coords.longitude;
+      // conversion m/s to km/h + parse sample: 12.5
+      const actualSpeed = parseFloat((position.coords.speed  * 3.6).toFixed(1));
+      const actualAlt = position.coords.altitude || 0;
+
+      this.dbUser.update({
+        alt: actualAlt,
+        isTracking: true,
+        mapCenterLat: actualLat,
+        mapCenterLng: actualLng,
+        mapZoom: this.defaultZoom,
+        speed: actualSpeed,
+      });
+
       const point: point = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
+        lat: actualLat,
+        lng: actualLng,
       };
       this.actualTrack.points.push(point);
 
-      this.dbTracks.update(this.trackKey, this.actualTrack);
+      this.dbTracks.update(this.trackingStartTime.toString(), this.actualTrack);
     };
 
-    const onError = () => alert('Sorry, no position available. Click "Stop tracking" if You want to abort');
+    const onError = () =>
+      alert('Sorry, no position available. Click "Stop tracking" if You want to abort');
 
     const geoOptions = {
-      enableHighAccuracy: true,
+      enableHighAccuracy: true, // use GPS receiver, if possible
       maximumAge        : 30000,
-      timeout           : 10000
+      timeout           : 20000 // after fimeout exipires, onError will be invoked
     };
 
     this.trackingId = navigator.geolocation.watchPosition(onSuccess, onError, geoOptions);
-    //
-    // this.trackingIntervalId = setInterval(() => {
-    //   const point: point = {
-    //     lat: (this.Math.random(2) + 50),
-    //     lng: (this.Math.random(2) + 7),
-    //   }
-    //   this.actualTrack.points.push(point);
-    //
-    //
-    //   this.dbTracks.update(this.trackKey, this.actualTrack);
-    // }, 1500)
   }
 
   stopTracking() {
     navigator.geolocation.clearWatch(this.trackingId);
+    this.dbUser.update({
+      alt: 0,
+      isTracking: false,
+      speed: 0,
+    });
   }
 }
 

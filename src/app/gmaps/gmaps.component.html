@@ -1,25 +1,34 @@
-<sebm-google-map
-  [latitude]="lat"
-  [longitude]="lng"
-  [zoom]="zoom"
-  [disableDefaultUI]="true"
-  [zoomControl]="false">
+<div class="gmaps">
+  <sebm-google-map
+    [latitude]="(dbUser | async)?.mapCenterLat"
+    [longitude]="(dbUser | async)?.mapCenterLng"
+    [zoom]="(dbUser | async)?.mapZoom"
+    [disableDefaultUI]="true"
+    [zoomControl]="false">
 
-  <sebm-google-map-polyline
-    *ngFor="let track of dbTracks | async"
-    [strokeColor]="track.trackColor"
-    geodesic="true"
-    strokeWeight="8">
-    <sebm-google-map-polyline-point
-      *ngFor="let p of track.points | pointFilter"
-      [latitude]="p.lat"
-      [longitude]="p.lng"
-      >
+    <sebm-google-map-polyline
+      *ngFor="let track of dbTracks | async"
+      [strokeColor]="track.trackColor"
+      geodesic="true"
+      strokeWeight="8">
+      <sebm-google-map-polyline-point
+        *ngFor="let p of track.points | pointFilter"
+        [latitude]="p.lat"
+        [longitude]="p.lng"
+        >
 
-    </sebm-google-map-polyline-point>
-  </sebm-google-map-polyline>
+      </sebm-google-map-polyline-point>
+    </sebm-google-map-polyline>
 
-</sebm-google-map>
+  </sebm-google-map>
 
-<button class="btn btn-default" (click)="startTracking()" >Start tracking </button>
-<button class="btn btn-primary" (click)="stopTracking()" >Stop tracking </button>
+  <button class="btn btn-primary" [class.disabled]="(dbUser | async)?.isTracking" (click)="startTracking()" >Start tracking </button>
+  <button class="btn btn-primary"
+  [class.disabled]="!(dbUser | async)?.isTracking" (click)="stopTracking()" >Stop tracking </button>
+  <div [class.hidden]="!(dbUser | async)?.isTracking">
+   Speed: {{(dbUser | async)?.speed || 0}} km/h
+  </div>
+  <div [class.hidden]="!(dbUser | async)?.isTracking">
+   Alt: {{(dbUser | async)?.alt || 0}} m
+  </div>
+</div>

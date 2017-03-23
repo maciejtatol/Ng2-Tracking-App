@@ -1,9 +1,11 @@
-<h1>
-  {{title}}
-</h1>
+<app-header>
+</app-header>
+<div class="main-box">
+  <app-gmaps class="main-box__item"></app-gmaps>
+  <app-side-panel class="main-box__item main-box__item--panel"></app-side-panel>
+</div>
 <ul>
   <li class="text" *ngFor="let item of items | async">
     {{item?.full_name}}
   </li>
 </ul>
-<app-gmaps></app-gmaps>

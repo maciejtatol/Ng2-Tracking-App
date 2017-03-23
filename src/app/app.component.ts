@@ -5,15 +5,13 @@ import { GmapsComponent } from './gmaps/gmaps.component';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   items: FirebaseListObservable<any[]>;
-  title = 'app works!';
 
   constructor(af: AngularFire) {
     this.items = af.database.list('/users');
-    console.log(this.items);
   }
 
   logProps(item) {

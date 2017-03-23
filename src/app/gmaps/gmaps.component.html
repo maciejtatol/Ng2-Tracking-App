@@ -19,16 +19,5 @@
 
       </sebm-google-map-polyline-point>
     </sebm-google-map-polyline>
-
   </sebm-google-map>
-
-  <button class="btn btn-primary" [class.disabled]="(dbUser | async)?.isTracking" (click)="startTracking()" >Start tracking </button>
-  <button class="btn btn-primary"
-  [class.disabled]="!(dbUser | async)?.isTracking" (click)="stopTracking()" >Stop tracking </button>
-  <div [class.hidden]="!(dbUser | async)?.isTracking">
-   Speed: {{(dbUser | async)?.speed || 0}} km/h
-  </div>
-  <div [class.hidden]="!(dbUser | async)?.isTracking">
-   Alt: {{(dbUser | async)?.alt || 0}} m
-  </div>
 </div>

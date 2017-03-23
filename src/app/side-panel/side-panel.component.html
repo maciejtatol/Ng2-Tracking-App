@@ -1,15 +1,23 @@
 <div
   class="side-panel"
-  [class.side-panel--hidden]="isPanelClosed"
   (window:resize)="onResize($event)">
   <button class="side-panel__button" (click)="togglePanel()">
     <i class="fa fa-id-card-o"></i>
   </button>
-  <ul class="side-panel__wrapper">
+  <ul
+    class="side-panel__wrapper"
+    [class.side-panel__wrapper--hidden]="isPanelClosed"
+  >
     <li class="side-panel__item">
-      <p>
-        side-panel works!
-      </p>
+      <button class="btn btn-primary" [class.disabled]="(dbUser | async)?.isTracking" (click)="onStartTracking()" >Start tracking </button>
+      <button class="btn btn-primary"
+      [class.disabled]="!(dbUser | async)?.isTracking" (click)="onStopTracking()" >Stop tracking </button>
+      <div [class.hidden]="!(dbUser | async)?.isTracking">
+       Speed: {{(dbUser | async)?.speed || 0}} km/h
+      </div>
+      <div [class.hidden]="!(dbUser | async)?.isTracking">
+       Alt: {{(dbUser | async)?.alt || 0}} m
+      </div>
     </li>
   </ul>
 </div>

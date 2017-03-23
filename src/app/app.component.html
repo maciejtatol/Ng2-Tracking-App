@@ -1,11 +1,22 @@
-<app-header>
-</app-header>
-<div class="main-box">
-  <app-gmaps class="main-box__item"></app-gmaps>
-  <app-side-panel class="main-box__item main-box__item--panel"></app-side-panel>
+<div class="app-root">
+  <app-header
+  [dbUser]="dbUser"
+  (resetEvent)="resetEvent()"
+  >
+  </app-header>
+  <div class="main-box">
+    <app-gmaps
+      class="main-box__item"
+      [dbTracks]="dbTracks"
+      [dbUser]="dbUser"
+      >
+    </app-gmaps>
+    <app-side-panel
+      class="main-box__item main-box__item--panel"
+      [dbUser]="dbUser"
+      (startTracking)="startTracking()"
+      (stopTracking)="stopTracking()"
+    >
+    </app-side-panel>
+  </div>
 </div>
-<ul>
-  <li class="text" *ngFor="let item of items | async">
-    {{item?.full_name}}
-  </li>
-</ul>

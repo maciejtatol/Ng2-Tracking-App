@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FirebaseObjectObservable } from 'angularfire2';
 
 @Component({
   selector: 'app-header',
@@ -6,6 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
+  @Input() dbUser: FirebaseObjectObservable<any>;
+  @Output() resetEvent = new EventEmitter();
 
   constructor() { }
+
+  onResetEvent() {
+    this.resetEvent.emit();
+  }
 }

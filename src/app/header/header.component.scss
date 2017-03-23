@@ -1,0 +1,33 @@
+.header {
+  padding: 10px;
+  height: 50px;
+  border-bottom: 1px solid #228F8C;
+
+  @media (min-width: 768px) {
+    padding: 20px;
+    height: 100px;
+  }
+
+  &__logo {
+    max-height: 100%;
+    float: left;
+  }
+
+  &__summary {
+    float: right;
+    text-align: right;
+    font-size: 10px;
+
+    @media (min-width: 768px) {
+      font-size: 18px;
+    }
+  }
+
+  &__summary-text {
+    text-align: right;
+  }
+
+  &__summary-image {
+
+  }
+}

@@ -1,0 +1,13 @@
+<header class="header clearfix">
+  <img class="header__logo" src="assets/logo.png" alt="logo">
+  <div class="header__summary clearfix">
+    <div class="header__summary-text">Time elapsed:</div>
+    <button
+      class="btn btn-default header__summary-button"
+      (click)="resetEvent"
+      [class.disabled]="isTracking">
+      Reset event
+    </button>
+  </div>
+
+</header>

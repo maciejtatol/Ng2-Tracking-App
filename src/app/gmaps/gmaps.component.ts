@@ -5,7 +5,6 @@ import {
   SebmGoogleMapPolylinePoint
 } from 'angular2-google-maps/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
-import { MapWrapperService } from './../map-wrapper.service';
 
 @Component({
   selector: 'app-gmaps',

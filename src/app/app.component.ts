@@ -11,7 +11,7 @@ export class AppComponent {
   dbTracks: FirebaseListObservable<any[]>;
   dbUser: FirebaseObjectObservable<any[]>;
   trackingId: number;
-  trackingStartTime: number;
+  trackingStartTime: Date;
   trackedPoints: Point[];
   actualTrack: Track;
   trackKey: string;
@@ -36,7 +36,7 @@ export class AppComponent {
       return alert('Geolocation is not supported by your browser');
     }
 
-    this.trackingStartTime = Date.now();
+    this.trackingStartTime = new Date;
     this.trackedPoints = [];
     this.actualTrack = {
       created_at: this.trackingStartTime,
@@ -97,10 +97,6 @@ export class AppComponent {
     this.stopTracking();
     this.dbTracks.remove();
   }
-
-  calculateTimeElapsed(){
-    return (Date.now() - this.trackingStartTime) / 1000;
-  }
 }
 
 interface Point {
@@ -109,8 +105,22 @@ interface Point {
 }
 
 interface Track {
-  created_at: number;
+  created_at: Date;
   trackColor: string;
   points: Point[];
   users: any[];
+}
+
+interface User {
+  alt: number;
+  created_at: Date;
+  eventStarted: Date;
+  full_name: string;
+  isTracking: boolean;
+  isVisitor: boolean;
+  mapCenterLat: number;
+  mapCenterLng: number;
+  mapDestinationLat: number;
+  mapDestinationLng: number;
+  mapZoom: number;
 }

@@ -10,7 +10,6 @@ import {
 } from 'angularfire2';
 
 import { AppComponent } from './app.component';
-import { HomePageComponent } from './home-page/home-page.component';
 import { GmapsComponent } from './gmaps/gmaps.component';
 import { firebaseConfig } from './../environments/firebase.config';
 import { AgmCoreModule } from 'angular2-google-maps/core';
@@ -22,7 +21,6 @@ import { SidePanelComponent } from './side-panel/side-panel.component';
   declarations: [
     AppComponent,
     GmapsComponent,
-    HomePageComponent,
     HeaderComponent,
     PointFilterPipe,
     SidePanelComponent,

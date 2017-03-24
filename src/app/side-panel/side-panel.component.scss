@@ -33,12 +33,20 @@
     font-size: 18px;
     font-family: 'PT Sans Bold';
     cursor: default;
+
+    @media (min-width: 768px) {
+      margin: 0 5px;
+    }
   }
 
   &__stats {
     min-height: 20px;
     cursor: default;
     min-height: 47px;
+
+    @media (min-width: 768px) {
+      margin: 0 5px;
+    }
   }
 
   &__stat-item {
@@ -46,12 +54,12 @@
   }
 
   &__wrapper {
-    padding: 20px;
+    height: 100%;
+    list-style: none;
     overflow-x: hidden;
     overflow-y: auto;
-    height: 100%;
-    list-style:  none;
     width: 300px;
+    padding: 20px;
 
     @media (min-width: 768px) {
       width: 400px;

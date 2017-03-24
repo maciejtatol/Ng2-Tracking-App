@@ -19,5 +19,11 @@
 
       </sebm-google-map-polyline-point>
     </sebm-google-map-polyline>
+    <sebm-google-map-marker
+      [markerDraggable]="!(dbUser | async)?.isTracking"
+      [latitude]="(dbUser | async)?.mapDestinationLat"
+      [longitude]="(dbUser | async)?.mapDestinationLng"
+      iconUrl="assets/target_point.svg">
+    </sebm-google-map-marker>
   </sebm-google-map>
 </div>

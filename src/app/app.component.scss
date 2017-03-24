@@ -1,12 +1,18 @@
 @font-face {
-    font-family: 'PT Sans';
+    font-family: 'PT Sans Regular';
+    src: url('../assets/PTSans-regular.ttf');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: 'PT Sans Bold';
     src: url('../assets/PTSans-regular.ttf');
     font-weight: bold;
 }
 
 .app-root {
   position: relative;
-  font-family: 'PT Sans';
+  font-family: 'PT Sans Regular';
 }
 
 .main-box {

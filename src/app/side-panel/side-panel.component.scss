@@ -7,14 +7,14 @@
     display: block;
     position: absolute;
     top: 10px;
-    left: -40px;
-    width: 40px;
-    height: 40px;
+    left: -50px;
+    width: 50px;
+    height: 50px;
     background-color: beige;
     cursor: pointer;
     z-index: 1;
-    font-size: 20px;
-    line-height: 30px;
+    font-size: 30px;
+    line-height: 40px;
     border: 1px solid #228F8C;
 
     @media (min-width: 768px) {
@@ -26,6 +26,23 @@
     &:hover {
       outline: none;
     }
+  }
+
+  &__name {
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-family: 'PT Sans Bold';
+    cursor: default;
+  }
+
+  &__stats {
+    min-height: 20px;
+    cursor: default;
+    min-height: 47px;
+  }
+
+  &__stat-item {
+    margin-bottom: 5px;
   }
 
   &__wrapper {
@@ -57,5 +74,17 @@
     margin-bottom: 20px;
     background-color: rgba(210,220,240,0.7);
     padding: 10px;
+  }
+
+  &__action-button {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+
+    @media (min-width: 768px) {
+      float:left;
+      width: calc(50% - 10px);
+      margin: 0 5px;
+    }
   }
 }

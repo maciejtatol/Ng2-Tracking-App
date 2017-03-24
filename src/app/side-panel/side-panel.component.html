@@ -8,16 +8,28 @@
     class="side-panel__wrapper"
     [class.side-panel__wrapper--hidden]="isPanelClosed"
   >
-    <li class="side-panel__item">
-      <button class="btn btn-primary" [class.disabled]="(dbUser | async)?.isTracking" (click)="onStartTracking()" >Start tracking </button>
-      <button class="btn btn-primary"
-      [class.disabled]="!(dbUser | async)?.isTracking" (click)="onStopTracking()" >Stop tracking </button>
-      <div [class.hidden]="!(dbUser | async)?.isTracking">
-       Speed: {{(dbUser | async)?.speed || 0}} km/h
+    <li class="side-panel__item clearfix">
+      <div class="side-panel__name">
+        {{(dbUser | async)?.full_name}}
       </div>
-      <div [class.hidden]="!(dbUser | async)?.isTracking">
-       Alt: {{(dbUser | async)?.alt || 0}} m
+      <div class="side-panel__stats">
+        <div
+          class="side-panel__stat-item"
+          [class.hidden]="!(dbUser | async)?.isTracking"
+        >
+         Speed: {{(dbUser | async)?.speed || 0}} km/h
+        </div>
+        <div
+          class="side-panel__stat-item"
+          [class.hidden]="!(dbUser | async)?.isTracking"
+        >
+         Alt: {{(dbUser | async)?.alt || 0}} m
+        </div>
       </div>
+      <button class="btn btn-primary side-panel__action-button" [class.disabled]="(dbUser | async)?.isTracking" (click)="onStartTracking()" >Start event </button>
+      <button class="btn btn-primary side-panel__action-button"
+      [class.disabled]="!(dbUser | async)?.isTracking" (click)="onStopTracking()" >Stop event </button>
+
     </li>
   </ul>
 </div>

@@ -1,0 +1,48 @@
+<div class="table__top text-center">
+  Select event
+</div>
+<table class="table table-stripped" #eventTable>
+  <thead class="thead-inverse">
+    <tr>
+      <th>#</th>
+      <th>Event name</th>
+      <th>Created</th>
+      <th class="text-center">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="let event of myEvents; let i = index"
+
+      [class.table__row--active]="isAuthor(event.created_by)"
+      class="table__row"
+    >
+      <th scope="row">{{i+1}}</th>
+      <td>{{event.event_name}}</td>
+      <td>
+        {{event.created_at | date: 'd-MMM-y, H:mm:ss'}}
+      </td>
+      <td class="text-center">
+        <button  class="btn btn-primary" (click)="navigateToEvent(event.$key)">
+          Enter
+        </button>
+        <button  *ngIf="isAuthor(event.created_by)" class="btn btn-default" (click)="deleteEvent(event.$key)">
+          Delete
+        </button>
+        <button
+          *ngIf="isAuthor(event.created_by)"
+          (click)="editEvent(event.$key)"
+          class="btn btn-default"
+        >
+          Edit
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p *ngIf="!(eventTable.rows.length - 1)" class="text-center">No events found</p>
+
+<div class="panel panel-default text-center">
+  <button class="btn btn-primary" (click)="createEvent()">Create New Event</button>
+</div>

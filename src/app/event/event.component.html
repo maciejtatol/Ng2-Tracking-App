@@ -1,0 +1,15 @@
+<div class="event-box">
+  <app-gmaps
+    class="event-box__item"
+    [dbTracks]="dbTracks"
+    [dbUser]="dbUser"
+    >
+  </app-gmaps>
+  <app-side-panel
+    class="event-box__item event-box__item--panel"
+    [dbUser]="dbUser"
+    (startTracking)="startTracking()"
+    (stopTracking)="stopTracking()"
+  >
+  </app-side-panel>
+</div>

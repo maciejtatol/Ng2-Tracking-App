@@ -14,31 +14,3 @@
   position: relative;
   font-family: 'PT Sans Regular';
 }
-
-.main-box {
-  display: flex;
-  align-items: stretch;
-  height: calc(100vh - 50px);
-  width: 100%;
-
-  @media (min-width: 768px) {
-    height: calc(100vh - 100px);
-  }
-
-  &__item {
-    width: 100%;
-
-    &--panel {
-      width: auto;
-      border-left: 1px solid #228F8C;
-    }
-
-    &--hidden {
-      display: none;
-
-      @media (min-width: 768px) {
-        display: block;
-      }
-    }
-  }
-}

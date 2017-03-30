@@ -1,22 +1,6 @@
 <div class="app-root">
   <app-header
-  [dbUser]="dbUser"
-  (resetEvent)="resetEvent()"
   >
   </app-header>
-  <div class="main-box">
-    <app-gmaps
-      class="main-box__item"
-      [dbTracks]="dbTracks"
-      [dbUser]="dbUser"
-      >
-    </app-gmaps>
-    <app-side-panel
-      class="main-box__item main-box__item--panel"
-      [dbUser]="dbUser"
-      (startTracking)="startTracking()"
-      (stopTracking)="stopTracking()"
-    >
-    </app-side-panel>
-  </div>
+  <router-outlet></router-outlet>
 </div>

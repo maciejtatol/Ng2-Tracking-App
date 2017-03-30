@@ -7,7 +7,7 @@
     [zoomControl]="false">
 
     <sebm-google-map-polyline
-      *ngFor="let track of dbTracks | async"
+      *ngFor="let track of eventTracks"
       [strokeColor]="track.trackColor"
       geodesic="true"
       strokeWeight="8">

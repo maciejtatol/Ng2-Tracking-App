@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { AuthService } from '../providers/auth.service';
 import { GmapsComponent } from './../gmaps/gmaps.component';
@@ -11,6 +11,9 @@ import { GmapsComponent } from './../gmaps/gmaps.component';
 })
 export class EventComponent implements OnInit {
   dbTracks: FirebaseListObservable<any[]>;
+  eventTracks: Track[];
+  dbUsers: FirebaseListObservable<any[]>;
+  dbEvent: FirebaseObjectObservable<any[]>;
   dbUser: FirebaseObjectObservable<any[]>;
   trackingId: number;
   trackingStartTime: Date;
@@ -19,45 +22,58 @@ export class EventComponent implements OnInit {
   trackKey: string;
   Math: any;
   navigator: any;
-  userId = 'user1';
-  defaultZoom = 17
+  userId: string;
+
+  eventKey: string;
+  defaultZoom = 17;
 
   private isLoggedIn: Boolean;
   private user_displayName: String;
   private user_email: String;
 
-  constructor(af: AngularFire, public authService: AuthService, private router: Router) {
-    console.log('Hello!');
+  constructor(af: AngularFire, public authService: AuthService, private router: Router, public route: ActivatedRoute) {
     this.dbTracks = af.database.list('/tracks');
-    this.dbUser = af.database.object(`/users/${this.userId}`);
+    this.dbUsers = af.database.list(`/users`);
+
     this.Math = Math;
     this.navigator = navigator;
 
-    this.dbUser.update({
-      isTracking: false,
-    });
-
     this.authService.af.auth.subscribe(
       (auth) => {
-        if (auth == null) {
-          console.log("Logged out");
-          this.isLoggedIn = false;
-          this.user_displayName = '';
-          this.user_email = '';
-          // this.router.navigate(['login']);
-        } else {
-          this.isLoggedIn = true;
-          this.user_displayName = auth.auth.displayName;
-          console.log("Logged in");
-          console.log(auth);
-          console.log(this.user_displayName+', id:'+auth.uid);
-          // this.router.navigate(['']);
+        if (auth !== null) {
+          this.dbUsers.subscribe((users) => {
+            users.map((user) => {
+              if(user.uid === auth.uid && this.userId !== auth.uid) {
+                this.userId = auth.uid;
+                this.dbUser = af.database.object(`/users/${user.$key}`);
+                this.dbUser.update({
+                  isTracking: false,
+                });
+              }
+            })
+          });
         }
       }
     );
+
+    this.route.params.subscribe(params => {
+      this.eventKey = params['id'];
+      this.dbEvent = af.database.object(`/events/${this.eventKey}`);
+
+      // reload eventTracks related to actual event by eventId
+      this.dbTracks.subscribe((tracks) => {
+        this.eventTracks = [];
+        tracks.map((track) => {
+          if(track.eventId === this.eventKey){
+            this.eventTracks.push(track);
+          }
+        })
+      });
+    });
    }
 
   ngOnInit() {
+
   }
 
   startTracking() {
@@ -71,7 +87,8 @@ export class EventComponent implements OnInit {
       created_at: this.trackingStartTime,
       trackColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`, // random hex color
       points: [],
-      users: []
+      userId: this.userId,
+      eventId: this.eventKey,
     };
 
     const onSuccess = (position) => {
@@ -80,7 +97,6 @@ export class EventComponent implements OnInit {
       // conversion m/s to km/h + parse sample: 12.5
       const actualSpeed = parseFloat((position.coords.speed  * 3.6).toFixed(1));
       const actualAlt = position.coords.altitude || 0;
-
       this.dbUser.update({
         alt: actualAlt,
         isTracking: true,
@@ -88,7 +104,6 @@ export class EventComponent implements OnInit {
         mapCenterLng: actualLng,
         mapZoom: this.defaultZoom,
         speed: actualSpeed,
-        eventStarted: this.trackingStartTime,
       });
 
       const point: Point = {
@@ -138,13 +153,14 @@ interface Track {
   created_at: Date;
   trackColor: string;
   points: Point[];
-  users: any[];
+  userId: string;
+  eventId: string;
 }
 
 interface User {
   alt: number;
-  created_at: Date;
-  eventStarted: Date;
+  created_at: string;
+  eventStarted: string;
   full_name: string;
   isTracking: boolean;
   isVisitor: boolean;

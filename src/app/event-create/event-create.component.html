@@ -1,0 +1,15 @@
+<form #f="ngForm" (ngSubmit)="onSubmit(f.value)" class="create-event">
+  <div class="form-group">
+    <label for="eventName">Event name:</label>
+    <input type="text" class="form-control" name="eventName" id="eventName" required="required" ngModel>
+  </div>
+  <div class="form-group">
+    <label for="latitude">Latitude:</label>
+    <input type="text" class="form-control" name="latitude" id="latitude" required="required" ngModel>
+  </div>
+  <div class="form-group">
+    <label for="longitude">Longitude:</label>
+    <input type="text" class="form-control" name="longitude" id="longitude" required="required" ngModel>
+  </div>
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>

@@ -4,10 +4,10 @@
     <div class="header__summary-text"></div>
     <button
       class="btn btn-default header__summary-button"
-      (click)="onResetEvent()"
+      (click)="logout()"
       [class.disabled]="(dbUser | async)?.isTracking"
     >
-      Reset event
+      Logout
     </button>
   </div>
 

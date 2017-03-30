@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { FirebaseObjectObservable } from 'angularfire2';
+import { AuthService } from '../providers/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -7,12 +9,13 @@ import { FirebaseObjectObservable } from 'angularfire2';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  @Input() dbUser: FirebaseObjectObservable<any>;
-  @Output() resetEvent = new EventEmitter();
+  constructor(public authService: AuthService, private router:Router) { }
 
-  constructor() { }
-
-  onResetEvent() {
-    this.resetEvent.emit();
+  logout() {
+    this.authService.logout()
+    .then((data) => {
+      this.router.navigate(['login']);
+    })
+    .catch(err => alert(err.message));
   }
 }

@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { RouterModule, Routes } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {
   AngularFireModule,
@@ -16,6 +15,15 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
 import { PointFilterPipe } from './point-filter.pipe';
 import { HeaderComponent } from './header/header.component';
 import { SidePanelComponent } from './side-panel/side-panel.component';
+import { LoginPageComponent } from './login-page/login-page.component';
+import { HomePageComponent } from './home-page/home-page.component';
+import { EventComponent } from './event/event.component';
+
+import { AuthService } from './providers/index';
+import { AuthGuard } from './guards/index';
+import { routing } from './app.routing';
+import { EventListComponent } from './event-list/event-list.component';
+import { EventCreateComponent } from './event-create/event-create.component';
 
 @NgModule({
   declarations: [
@@ -24,10 +32,16 @@ import { SidePanelComponent } from './side-panel/side-panel.component';
     HeaderComponent,
     PointFilterPipe,
     SidePanelComponent,
+    LoginPageComponent,
+    HomePageComponent,
+    EventComponent,
+    EventListComponent,
+    EventCreateComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     AngularFireModule.initializeApp(firebaseConfig, {
       provider: AuthProviders.Google,
@@ -35,9 +49,10 @@ import { SidePanelComponent } from './side-panel/side-panel.component';
     }),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAdqECNlRtdg5MaB-GJQ486W-jGZhhWCNg'
-    })
+    }),
+    routing
   ],
-  providers: [],
+  providers: [AuthGuard, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

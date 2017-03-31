@@ -21,7 +21,6 @@ export class EventListComponent implements OnInit {
         this.dbEvents = af.database.list('/events');
         this.dbEvents.subscribe(
           (allEvents) => {
-            console.log(allEvents);
             this.myEvents = [];
             allEvents.forEach(thisEvent => {
               if (thisEvent.users && Object.keys(thisEvent.users).includes(auth.uid)) {

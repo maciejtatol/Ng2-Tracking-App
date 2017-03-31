@@ -8,27 +8,44 @@
     class="side-panel__wrapper"
     [class.side-panel__wrapper--hidden]="isPanelClosed"
   >
-    <li class="side-panel__item clearfix">
+    <li *ngFor="let dbUser of dbUsers | async" class="side-panel__item clearfix">
       <div class="side-panel__name">
-        {{(dbUser | async)?.full_name}}
+        {{dbUser.full_name}}
       </div>
       <div class="side-panel__stats">
         <div
           class="side-panel__stat-item"
-          [class.hidden]="!(dbUser | async)?.isTracking"
+          [class.hidden]="!dbUser.isTracking"
         >
-         Speed: {{(dbUser | async)?.speed || 0}} km/h
+         Speed: {{dbUser?.speed || 0}} km/h
         </div>
         <div
           class="side-panel__stat-item"
-          [class.hidden]="!(dbUser | async)?.isTracking"
+          [class.hidden]="!dbUser.isTracking"
         >
-         Alt: {{(dbUser | async)?.alt || 0}} m
+         Alt: {{dbUser?.alt || 0}} m
         </div>
       </div>
-      <button class="btn btn-primary side-panel__action-button" [class.disabled]="(dbUser | async)?.isTracking" (click)="onStartTracking()" >Start event </button>
-      <button class="btn btn-primary side-panel__action-button"
-      [class.disabled]="!(dbUser | async)?.isTracking" (click)="onStopTracking()" >Stop event </button>
+      <button
+        *ngIf="isActualUser(dbUser.uid)"
+        class="btn btn-primary side-panel__action-button"   [class.disabled]="dbUser.isTracking" (click)="onStartTracking()"
+      >
+        Start tracking
+      </button>
+      <button
+        *ngIf="isActualUser(dbUser.uid)"
+        class="btn btn-primary side-panel__action-button"
+        [class.disabled]="!dbUser.isTracking" (click)="onStopTracking()"
+      >
+        Stop tracking
+      </button>
+      <button
+        *ngIf="isEventAuthor(dbUser.uid)"
+        class="btn btn-primary side-panel__action-button side-panel__action-button--reset"
+        [class.disabled]="dbUser.isTracking" (click)="onResetEvenet()"
+      >
+        Reset event
+      </button>
 
     </li>
   </ul>

@@ -3,6 +3,21 @@
   <div class="header__summary clearfix">
     <div class="header__summary-text"></div>
     <button
+      *ngIf=""
+      class="btn btn-default header__summary-button" [routerLink]="['']"
+    >
+      Back to list
+    </button>
+    <button
+      *ngIf="!isLoggedIn"
+      class="btn btn-default header__summary-button"
+      (click)="logout()"
+      [class.disabled]="(dbUser | async)?.isTracking"
+    >
+      Login
+    </button>
+    <button
+      *ngIf="isLoggedIn"
       class="btn btn-default header__summary-button"
       (click)="logout()"
       [class.disabled]="(dbUser | async)?.isTracking"

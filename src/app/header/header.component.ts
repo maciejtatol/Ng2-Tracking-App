@@ -9,7 +9,18 @@ import { AuthService } from '../providers/auth.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  constructor(public authService: AuthService, private router:Router) { }
+  isLoggedIn = false;
+  constructor(public authService: AuthService, private router: Router) {
+    this.authService.af.auth.subscribe(
+      (auth) => {
+        if (auth !== null) {
+          this.isLoggedIn = true;
+        } else {
+          this.isLoggedIn = false;
+        }
+      }
+    );
+  }
 
   logout() {
     this.authService.logout()

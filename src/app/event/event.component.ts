@@ -13,8 +13,8 @@ export class EventComponent implements OnInit {
   dbTracks: FirebaseListObservable<any[]>;
   eventTracks: Track[];
   dbUsers: FirebaseListObservable<any[]>;
-  dbEvent: FirebaseObjectObservable<any[]>;
-  dbUser: FirebaseObjectObservable<any[]>;
+  dbEvent: FirebaseObjectObservable<any>;
+  dbUser: FirebaseObjectObservable<any>;
   trackingId: number;
   trackingStartTime: Date;
   trackedPoints: Point[];
@@ -37,7 +37,6 @@ export class EventComponent implements OnInit {
 
     this.Math = Math;
     this.navigator = navigator;
-
     this.authService.af.auth.subscribe(
       (auth) => {
         if (auth !== null) {
@@ -138,8 +137,10 @@ export class EventComponent implements OnInit {
   }
 
   resetEvent() {
-    this.stopTracking();
-    this.dbTracks.remove();
+    if(confirm('Are you sure?')){
+      this.stopTracking();
+      this.dbTracks.remove();
+    }
   }
 
 }

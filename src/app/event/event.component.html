@@ -7,9 +7,13 @@
   </app-gmaps>
   <app-side-panel
     class="event-box__item event-box__item--panel"
-    [dbUser]="dbUser"
+    [dbUsers]="dbUsers"
+    [eventId]="eventId"
+    [eventAuthorId]="(dbEvent | async)?.created_by"
+    [userId]="userId"
     (startTracking)="startTracking()"
     (stopTracking)="stopTracking()"
+    (resetEvent)="resetEvent()"
   >
   </app-side-panel>
 </div>
